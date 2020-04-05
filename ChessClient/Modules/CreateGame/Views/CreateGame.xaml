@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="ChessClient.Modules.CreateGame.Views.CreateGame"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="600" d:DesignWidth="940">
+    
+    <Grid Width="420" Height="400">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource ArrowButton}" Grid.Column="0" HorizontalAlignment="Left" Command="{Binding BackToFindGameCommand}" Margin="10 0 0 0"/>
+            <Label Content="Создать игру:" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        </Grid>
+
+        <TextBox Grid.Row="1" Style="{StaticResource TextboxWithPlaceHolder}" 
+                 Tag="Введите название игры" Height="50" Width="400" 
+                 Text="{Binding GameName, UpdateSourceTrigger=PropertyChanged}" >
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding CreateNewGameCommand}" Key="Return" />
+                <KeyBinding Command="{Binding CreateNewGameCommand}" Key="Enter" />
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Grid Grid.Row="2" Width="250" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Выберите цвет:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <RadioButton Style="{StaticResource WhiteChoice}"  GroupName="Sides" Content="White" 
+                         IsChecked="{Binding WhiteSide, UpdateSourceTrigger=PropertyChanged}" 
+                         Grid.Column="1" ToolTip="Белые" />
+            <RadioButton Style="{StaticResource BlackChoice}" GroupName="Sides" Content="Black" 
+                         IsChecked="{Binding BlackSide, UpdateSourceTrigger=PropertyChanged}"  
+                         Grid.Column="2" ToolTip="Черные"/>
+        </Grid>
+
+        <Grid Grid.Row="3" Width="250" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Content="Пароль:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <CheckBox Grid.Column="1" Style="{StaticResource CustomCheckbox}" 
+                      Height="30" IsChecked="{Binding HasPassword, UpdateSourceTrigger=PropertyChanged}" 
+                      ToolTip="Установить пароль"/>
+        </Grid>
+
+        <TextBox Grid.Row="4" Style="{StaticResource TextboxWithPlaceHolder}" 
+                 Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" 
+                 Tag="Введите пароль" Height="50" Width="400" Visibility="{Binding PasswordVisibility}" >
+            <TextBox.InputBindings>
+                <KeyBinding Command="{Binding CreateNewGameCommand}" Key="Return" />
+                <KeyBinding Command="{Binding CreateNewGameCommand}" Key="Enter" />
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <Button  Content="Создать игру" Margin="5" Grid.Row="5" Style="{StaticResource  MenuButton}" 
+                 VerticalAlignment="Center" Command="{Binding CreateNewGameCommand}" />
+    </Grid>
+</UserControl>
